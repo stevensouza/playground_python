@@ -24,8 +24,6 @@ def basics():
     print(MY_NUMBER)
 
 
-
-
 def list_methods():
     global value, numlist
     print("\n************* LIST_METHODS")
@@ -125,8 +123,28 @@ def dictionary_method():
     print(families)
 
 
+def function_method():
+    print(_get_souza("steve"))
+    print(_get_souza(name="joe"))
+    print(_get_souza())
+    _varargs("steve", "joe", "bill")
+
+
+# default value of 'steve'
+def _get_souza(name="steve"):
+    """function comments
+        hello my comment
+        :rtype: object
+    """
+    return f"{name} souza"
+
+
+def _varargs(*names):
+    print(names)
+
+
 basics()
 list_methods()
 conditionals_method()
 dictionary_method()
-
+function_method()
