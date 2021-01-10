@@ -2,6 +2,21 @@ import sys
 
 # basic python syntax experiments
 
+# call as: sayhi("steve")
+# you can only call sayhi function with this approach
+from myfunctions import sayhi
+# could do this too...
+from myfunctions import sayhi as hi
+# from myfunctions import *
+# from myfunctions import sayhi, saybye, saylater
+# call as: myfunctions.sayhi("steve")
+# you can call everything with this approach
+import myfunctions
+
+# call as: func.sayhi("steve")
+# you can call everything with this approach
+import myfunctions as func
+
 
 def basics():
     """my comment"""
@@ -131,6 +146,11 @@ def function_method():
     print(_get_souza())
     _varargs("steve", "joe", "bill")
 
+def function_module():
+    print(sayhi("steve"))
+    print(myfunctions.sayhi("joel"))
+    print(func.sayhi("jean"))
+    print(hi("dad"))
 
 # default value of 'steve'
 def _get_souza(name="steve"):
@@ -150,3 +170,4 @@ list_methods()
 conditionals_method()
 dictionary_method()
 function_method()
+function_module()
