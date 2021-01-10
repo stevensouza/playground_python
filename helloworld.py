@@ -4,6 +4,7 @@ import sys
 
 # call as: sayhi("steve")
 # you can only call sayhi function with this approach
+from person import Person
 from myfunctions import sayhi
 # could do this too...
 from myfunctions import sayhi as hi
@@ -146,11 +147,20 @@ def function_method():
     print(_get_souza())
     _varargs("steve", "joe", "bill")
 
+
 def function_module():
     print(sayhi("steve"))
     print(myfunctions.sayhi("joel"))
     print(func.sayhi("jean"))
     print(hi("dad"))
+
+
+def use_class():
+    me = Person("steve", "souza")
+    print(me)
+    print(me.get_fname())
+    print(me.get_lname())
+
 
 # default value of 'steve'
 def _get_souza(name="steve"):
@@ -171,3 +181,5 @@ conditionals_method()
 dictionary_method()
 function_method()
 function_module()
+use_class()
+
