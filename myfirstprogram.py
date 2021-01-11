@@ -4,7 +4,7 @@ import sys
 
 # call as: sayhi("steve")
 # you can only call sayhi function with this approach
-from person import Person
+from person import Person, Child
 from myfunctions import sayhi
 # could do this too...
 from myfunctions import sayhi as hi
@@ -22,7 +22,7 @@ import myfunctions as func
 def basics():
     """my comment"""
     print("\n************* BASICS")
-    # python3 helloworld.py
+    # python3 myfirstprogram.py
     print("hi")
     print("mom")
     print(sys.version)
@@ -161,6 +161,10 @@ def use_class():
     print(me.get_fname())
     print(me.get_lname())
 
+    my_kid = Child("a", "souza", "purple")
+    print(my_kid.get_favorite_color())
+    print(my_kid.favorite_color)
+
 
 # default value of 'steve'
 def _get_souza(name="steve"):
@@ -182,4 +186,3 @@ dictionary_method()
 function_method()
 function_module()
 use_class()
-
