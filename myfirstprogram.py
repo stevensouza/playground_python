@@ -84,6 +84,11 @@ def list_methods():
     numlistcopy = numlist[:]
     print(numlistcopy)
 
+    # example of python 'list comprehension' -
+    #  for loop and return a new list with each element is a value*2 of each element in numlist.
+    new_numlist = [value*2 for value in numlist]
+    print(new_numlist)
+
 
 def conditionals_method():
     global numlist
