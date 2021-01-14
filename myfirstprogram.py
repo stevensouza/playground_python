@@ -40,6 +40,11 @@ def basics():
     # no built in constants but all caps by convention
     MY_NUMBER = 14_000_000
     print(MY_NUMBER)
+    # Note these are not really booleans. They return a value
+    print(1 and 2 and 3)  # 3
+    print(1 and 2 or 3)  # 2
+    print(1 or 2 and 3 or 4)  # 1
+    print(1 and 2 == 2 and 3 or 4)  # 3
 
 
 def list_methods():
@@ -86,7 +91,7 @@ def list_methods():
 
     # example of python 'list comprehension' -
     #  for loop and return a new list with each element is a value*2 of each element in numlist.
-    new_numlist = [value*2 for value in numlist]
+    new_numlist = [value * 2 for value in numlist]
     print(new_numlist)
 
 
