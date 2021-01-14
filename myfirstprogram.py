@@ -45,6 +45,10 @@ def basics():
     print(1 and 2 or 3)  # 2
     print(1 or 2 and 3 or 4)  # 1
     print(1 and 2 == 2 and 3 or 4)  # 3
+    # ternary operator
+    my_bool = True
+    print(0 if my_bool else 1)  # 0
+    print(0 if not my_bool else 1)  # 1
 
 
 def list_methods():
