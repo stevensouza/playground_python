@@ -1,4 +1,4 @@
-import sys
+import sys, os
 
 # basic python syntax experiments
 
@@ -180,6 +180,13 @@ def use_class():
     print(my_kid.favorite_color)
 
 
+def env_variables():
+    print(os.environ)
+    print(os.environ.get('USER'))
+    print(os.environ.get('idonotexist'))
+    print(os.environ.get('PATH'))
+
+
 # default value of 'steve'
 def _get_souza(name="steve"):
     """function comments
@@ -200,3 +207,4 @@ dictionary_method()
 function_method()
 function_module()
 use_class()
+env_variables()
