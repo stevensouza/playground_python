@@ -1,6 +1,5 @@
-import googlesheets2
 import utils
-import googlesheets2 as gs
+import googlesheets as gs
 
 def googlesheets_to_pandas():
     creds_file = "/Users/stevesouza/.kettle/client_secret.json"
