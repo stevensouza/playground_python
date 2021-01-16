@@ -9,15 +9,19 @@ from dateutil.parser import parse as parse_date
 #         # engine = create_engine('mysql://admin:root@localhost/delme')
 #         self.engine = create_engine('sqlite://', echo=False)
 
-def date_coercion(value, fuzzy=False):
+def date_coercion(value: object, fuzzy: bool = False) -> object:
     """
-    Return whether the string can be interpreted as a date.
+    Return a date if value passed can be converted to a date otherwise return the passed value unchanged.
 
+    :return: date or original value
+    :rtype: object
     :param value: str, string to check for date
     :param fuzzy: bool, ignore unknown tokens in string if True
     """
     try:
-        if isinstance(value, str):
+        # parse any string except numbers i.e.: "10", "10.5".  These will normally parse to dates but we
+        # don't want to do that.
+        if isinstance(value, str) and not is_str_number(value):
             return parse_date(value, fuzzy=fuzzy)
         else:
             # if not isinstance(string, str) or string.isnumeric() or isfloat(string):
@@ -26,18 +30,31 @@ def date_coercion(value, fuzzy=False):
     except ValueError:
         return value
 
-# def isfloat(string):
-#     try:
-#         float(string)
-#         return True
-#     except ValueError:
-#         return False
 
-def to_pandas(rows, header=None,strings_to_dates=True):
+def is_str_number(value: str) -> bool:
+    if not isinstance(value, str):
+        return False
+
+    return value.isnumeric() or is_float(value)
+
+
+def is_float(string):
+    """
+
+    :rtype: object
+    """
+    try:
+        float(string)
+        return True
+    except ValueError:
+        return False
+
+
+def to_pandas(rows, header=None, strings_to_dates=True):
     df = pd.DataFrame(data=rows, columns=header)
     if strings_to_dates:
         # change string_to_date
-        return df.applymap(lambda cell_value:  date_coercion(cell_value))
+        return df.applymap(lambda cell_value: date_coercion(cell_value))
         # return df.applymap(lambda cell_value: parse_date(cell_value) if date_coercion(cell_value) else cell_value)
     else:
         return df
@@ -47,7 +64,7 @@ def to_db(df):
     engine = create_engine('sqlite://', echo=True)
     df.to_sql(name='users', con=engine, if_exists='append', index=False)
     delme1 = engine.execute("SELECT * FROM users").fetchall()
-    print (delme1)
+    print(delme1)
 
     # df = pd.DataFrame({'date1': ["2021-02-02", "2021-04-05", "2021-03-02"],
     #                    'fname': ["ed", "jo", "al"],
@@ -93,7 +110,6 @@ def to_db(df):
     # # u.todb("tablename",u.topandas(gs.get_data(xx))
 
 
-
 '''
 
 df.plot
@@ -137,12 +153,3 @@ pd.to_datetime() converts the date time strings in ISO8601 format to datetime64 
 # db = Utils("a", "b", "c")
 # print(db)
 # db.to_db()
-# print(db.is_date("2013-01-01"))
-# print(db.is_date("2021-02-02"))
-# print(db.is_date("10"))
-# print(db.is_date("10.5"))
-# print(db.is_date("1999"))
-# print(db.is_date("ed"))
-# print(parse_date("Thursday, January 14, 2021 at 8 pm"))
-
-
