@@ -40,12 +40,12 @@ class GoogleSheet:
 
 if __name__ == '__main__':
     creds_file = "/Users/stevesouza/.kettle/client_secret.json"
-    id = "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo"
+    spreadsheet_id = "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo"
     sheet = "Sheet1" # A1 notation
     spreadsheet = GoogleSheet(creds_file)
 
-    print(f"modifiedTime={spreadsheet.get_modified_time(id)}")
-    data = spreadsheet.get_data(id, sheet)
+    print(f"modifiedTime={spreadsheet.get_modified_time(spreadsheet_id)}")
+    data = spreadsheet.get_data(spreadsheet_id, sheet)
     print(data)
     print(len(data))
     header = data.pop(0)
@@ -56,33 +56,22 @@ if __name__ == '__main__':
     print(df.dtypes)
 
     print("***")
-    data = spreadsheet.get_data(id, sheet)
+    data = spreadsheet.get_data(spreadsheet_id, sheet)
     df = utils.to_pandas(data)
     print(df)
     print(df.dtypes)
 
     print("***")
-    data = spreadsheet.get_data(id, sheet)
+    data = spreadsheet.get_data(spreadsheet_id, sheet)
     data.pop(0)
     df = utils.to_pandas(rows=data,  strings_to_dates=False)
     print(df)
     print(df.dtypes)
 
-    data = spreadsheet.get_data(id, sheet)
+    data = spreadsheet.get_data(spreadsheet_id, sheet)
     header = data.pop(0)
     df = utils.to_pandas(data, header)
     utils.to_db(df)
 
-# title: Sheet1, index: 0
-    # title: Sheet2GeneratedFromPentaho, index: 1
-    # title: ExcelToGoogleSheetFromPentaho, index: 2
-    # title: testImportRange, index: 3
-    # title: playground, index: 4
-
-    # getColumnHeaders/getFirstRow?, Sheet object? get_data_with_metadata, get_data, sheetname
-
-    # print(google_sheet.get_sheet_by_name("idonotexist"))
-    # list.copy()
-    # list.pop(0)
 
 

@@ -202,11 +202,12 @@ def _varargs(*names):
     print(names)
 
 
-basics()
-list_methods()
-conditionals_method()
-dictionary_method()
-function_method()
-function_module()
-use_class()
-env_variables()
+if __name__ == '__main__':
+    basics()
+    list_methods()
+    conditionals_method()
+    dictionary_method()
+    function_method()
+    function_module()
+    use_class()
+    env_variables()
