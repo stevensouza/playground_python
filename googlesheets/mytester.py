@@ -4,10 +4,10 @@ import googlesheets2 as gs
 
 def googlesheets_to_pandas():
     creds_file = "/Users/stevesouza/.kettle/client_secret.json"
-    id = "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo"
+    spreadsheet_id = "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo"
     sheet = "Sheet1" # A1 notation
     spreadsheet = gs.GoogleSheet(creds_file)
-    data = spreadsheet.get_data(id, sheet)
+    data = spreadsheet.get_data(spreadsheet_id, sheet)
     print("** spreadsheet data")
     print(data)
     print(f"length: {len(data)}")
@@ -27,13 +27,13 @@ def googlesheets_to_pandas():
 
 def get_example_googlesheets():
     creds_file = "/Users/stevesouza/.kettle/client_secret.json"
-    id = "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo"
+    spreadsheet_id = "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo"
     spreadsheet = gs.GoogleSheet(creds_file)
-    print(spreadsheet.get_data(id, "Sheet1"))
-    print(spreadsheet.get_data(id, "Sheet2GeneratedFromPentaho"))
-    print(spreadsheet.get_data(id, "ExcelToGoogleSheetFromPentaho"))
-    print(spreadsheet.get_data(id, "testImportRange"))
-    print(spreadsheet.get_data(id, "playground"))
+    print(spreadsheet.get_data(spreadsheet_id, "Sheet1"))
+    print(spreadsheet.get_data(spreadsheet_id, "Sheet2GeneratedFromPentaho"))
+    print(spreadsheet.get_data(spreadsheet_id, "ExcelToGoogleSheetFromPentaho"))
+    print(spreadsheet.get_data(spreadsheet_id, "testImportRange"))
+    print(spreadsheet.get_data(spreadsheet_id, "playground"))
 
 
 if __name__ == '__main__':
