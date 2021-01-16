@@ -65,7 +65,9 @@ def list_methods():
     mylist.insert(0, "newfirst")
     del mylist[2]  # remove 'second'
     print(mylist)
-    print(mylist.pop())  # removes last item
+    print(mylist.pop())  # removes last item and returns it
+    # list.pop(0) would remove first item
+    mylist.copy()
     mylist.remove("first")
     mylist.sort()
     mylist.reverse()
