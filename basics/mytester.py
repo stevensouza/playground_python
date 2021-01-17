@@ -1,10 +1,10 @@
-import utils
-import googlesheets as gs
+from pandas import googlesheets as gs, utils
+
 
 def googlesheets_to_pandas():
     creds_file = "/Users/stevesouza/.kettle/client_secret.json"
     spreadsheet_id = "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo"
-    sheet = "Sheet1" # A1 notation
+    sheet = "Sheet1"  # A1 notation
     spreadsheet = gs.GoogleSheet(creds_file)
     data = spreadsheet.get_data(spreadsheet_id, sheet)
     print("** spreadsheet data")
@@ -52,5 +52,3 @@ if __name__ == '__main__':
     #     proper variable and function names
     googlesheets_to_pandas()
     get_example_googlesheets()
-
-

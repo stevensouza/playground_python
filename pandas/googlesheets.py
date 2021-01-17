@@ -2,10 +2,6 @@ import google.oauth2.service_account
 import googleapiclient.discovery
 import utils
 
-import json
-import sys, os
-import datetime
-
 # import tableau_metrics
 # read google sheet - https://developers.google.com/sheets/api/samples/reading
 scopes = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
@@ -64,7 +60,7 @@ if __name__ == '__main__':
     print("***")
     data = spreadsheet.get_data(spreadsheet_id, sheet)
     data.pop(0)
-    df = utils.to_pandas(rows=data,  strings_to_dates=False)
+    df = utils.to_pandas(rows=data, strings_to_dates=False)
     print(df)
     print(df.dtypes)
 

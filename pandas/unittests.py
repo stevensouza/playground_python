@@ -1,11 +1,16 @@
 import datetime
 from unittest import TestCase
-from sqlalchemy import create_engine
+
 import pandas as pd
+from sqlalchemy import create_engine
+
 import utils
 
-
-
+"""
+    * Tests for converting various tabular data sets to a Pandas dataframe. For example: excel, lists
+    * Tests for saving Pandas DataFrames to a database.
+    * Tests for other utility methods such as data coercion
+"""
 class UnitTests(TestCase):
 
     data = [
@@ -86,7 +91,7 @@ class UnitTests(TestCase):
         col_types = df.select_dtypes(["datetime64"]).columns.tolist()
         self.assertListEqual([3], col_types)
 
-    def test_to_db_string_to_date_coercion(self):
+    def test_to_sqlite_db_string_to_date_coercion(self):
         """
         Creates the following table if it doesn't exist or uses the existing one if it does.
         This example converts the string formatted date columns to DATETIME
@@ -111,7 +116,7 @@ class UnitTests(TestCase):
         table_results = engine.execute(f"SELECT * FROM {MYTABLE}").fetchall()
         self.assertEqual(3, len(table_results))
 
-    def test_to_db_no_string_to_date_coercion(self):
+    def test_to_sqlite_db_no_string_to_date_coercion(self):
         """
         Creates the following table if it doesn't exist or uses the existing one if it does.
         This example does not convert the string formatted date columns to DATETIME
@@ -135,34 +140,102 @@ class UnitTests(TestCase):
         table_results = engine.execute(f"SELECT * FROM {MYTABLE}").fetchall()
         self.assertEqual(3, len(table_results))
 
-    def test_delme(self):
-        engine = create_engine('mysql+pymysql://root:root@localhost/delme')
-        # engine = create_engine('mysql+mysqldb://root:root@localhost/delme')
-        # engine = create_engine('mysql+mysqlconnector://root:root@localhost/delme?auth_plugin=mysql_native_password',
-        #                        connect_args={'auth_plugin': 'mysql_native_password'})
-        print(engine)
-        table_results = engine.execute(f"select * from pet").fetchall()
-        print(table_results)
+    def test_to_mysql_db_string_to_date_coercion(self):
+        """
+        Creates the following table if it doesn't exist or uses the existing one if it does.
+        This example converts the string formatted date columns to DATETIME. If dates aren't
+        coerced note that the inserts would fail the following table structure as a string of
+        format '12/20/2020' is not considered a date.
 
-        df = pd.read_sql("select * from pet", engine)
-        print(df)
-        print(df['owner'].max())
+            CREATE TABLE mytable (
+                obj_col TEXT,
+                int_col BIGINT,
+                float_col FLOAT(53),
+                date_col DATETIME
+            )
 
-        df = pd.read_excel(io="resources/names.xlsx", sheet_name="Sheet1", header=0)
-        print(df)
-        print(df["age"].sum())
+        """
+        # Because the following test requires mysql to be running it is disabled by default.
+        enabled = False
+        if enabled:
+            MYTABLE = "mytable"
+            data = self.data.copy()
+            header = data.pop(0)
+            # defaults to convert any string cells to dates if they can be converted
+            df = utils.to_pandas(data, header)
+            # username: root, password: root, database: delme.  All of these can be anything as long
+            # as they allow you to connect to the mysql instance.
+            engine = create_engine('mysql+pymysql://root:root@localhost/delme', echo=True)
+            utils.to_db(engine=engine,
+                        dataframe=df,
+                        table_name=MYTABLE)
+
+            table_results = engine.execute(f"SELECT * FROM {MYTABLE}").fetchall()
+            print(table_results)
+            # For mysql test this is a permanent table and will append so it may have greater than 3 rows.
+            self.assertLessEqual(3, len(table_results))
+        else:
+            print("This test is disabled")
+
+    def test_to_mysql_db_no_string_to_date_coercion(self):
+        """
+        Creates the following table if it doesn't exist or uses the existing one if it does.
+        This example does not convert the string formatted date columns to DATETIME. It leaves them as
+        text.
+
+            CREATE TABLE mytable_text (
+                obj_col TEXT,
+                int_col BIGINT,
+                float_col FLOAT(53),
+                date_col TEXT
+            )
+
+        """
+        # Because the following test requires mysql to be running it is disabled by default.
+        enabled = False
+        if enabled:
+            MYTABLE = "mytable_text"
+            data = self.data.copy()
+            header = data.pop(0)
+            df = utils.to_pandas(data, header, strings_to_dates=False)
+            # username: root, password: root, database: delme.  All of these can be anything as long
+            # as they allow you to connect to the mysql instance.
+            engine = create_engine('mysql+pymysql://root:root@localhost/delme', echo=True)
+            utils.to_db(engine=engine,
+                        dataframe=df,
+                        table_name=MYTABLE)
+
+            table_results = engine.execute(f"SELECT * FROM {MYTABLE}").fetchall()
+            print(table_results)
+            # For mysql test this is a permanent table and will append so it may have greater than 3 rows.
+            self.assertLessEqual(3, len(table_results))
+        else:
+            print("This test is disabled")
+
+    def test_excel_to_sqlite_db_string_to_date_coercion(self):
+        """
+        Based on the data in the excel spreadsheet the following table is created if it doesn't exist or use
+        the existing one if it does exist. This example converts the string formatted date columns to DATETIME
+
+            CREATE TABLE mytable (
+                obj_col TEXT,
+                int_col BIGINT,
+                float_col FLOAT,
+                date_col DATETIME
+            )
+        """
+        MYTABLE = "mytable"
+        df = pd.read_excel(io="resources/python_excel_test.xlsx", sheet_name="Sheet1", header=0)
+        print(f"Excel sheet dataFrame: \n{df}")
+        self.assertEqual(60, df["int_col"].sum())
+
         engine = create_engine('sqlite://', echo=True)
         utils.to_db(engine=engine,
                     dataframe=df,
-                    table_name="names")
+                    table_name=MYTABLE)
 
-        table_results = engine.execute(f"SELECT * FROM names").fetchall()
+        table_results = engine.execute(f"SELECT * FROM {MYTABLE}").fetchall()
         print(table_results)
-
-
-    # The MySQL Connector/Python DBAPI has had many issues since its release, some of
-        # which may remain unresolved, and the mysqlconnector dialect is not tested as part of
-        # SQLAlchemy’s continuous integration. The recommended MySQL dialects are mysqlclient
-        # and PyMySQL.
+        self.assertEqual(3, len(table_results))
 
 
