@@ -41,7 +41,7 @@ class GoogleSheet:
 if __name__ == '__main__':
     creds_file = "/Users/stevesouza/.kettle/client_secret.json"
     spreadsheet_id = "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo"
-    sheet = "Sheet1" # A1 notation
+    sheet = "Sheet1"  # A1 notation
     spreadsheet = GoogleSheet(creds_file)
 
     print(f"modifiedTime={spreadsheet.get_modified_time(spreadsheet_id)}")

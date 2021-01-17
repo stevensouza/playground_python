@@ -1,7 +1,9 @@
 import datetime
 from unittest import TestCase
-from sqlalchemy import engine, create_engine
+from sqlalchemy import create_engine
+import pandas as pd
 import utils
+
 
 
 class UnitTests(TestCase):
@@ -132,4 +134,35 @@ class UnitTests(TestCase):
 
         table_results = engine.execute(f"SELECT * FROM {MYTABLE}").fetchall()
         self.assertEqual(3, len(table_results))
+
+    def test_delme(self):
+        engine = create_engine('mysql+pymysql://root:root@localhost/delme')
+        # engine = create_engine('mysql+mysqldb://root:root@localhost/delme')
+        # engine = create_engine('mysql+mysqlconnector://root:root@localhost/delme?auth_plugin=mysql_native_password',
+        #                        connect_args={'auth_plugin': 'mysql_native_password'})
+        print(engine)
+        table_results = engine.execute(f"select * from pet").fetchall()
+        print(table_results)
+
+        df = pd.read_sql("select * from pet", engine)
+        print(df)
+        print(df['owner'].max())
+
+        df = pd.read_excel(io="resources/names.xlsx", sheet_name="Sheet1", header=0)
+        print(df)
+        print(df["age"].sum())
+        engine = create_engine('sqlite://', echo=True)
+        utils.to_db(engine=engine,
+                    dataframe=df,
+                    table_name="names")
+
+        table_results = engine.execute(f"SELECT * FROM names").fetchall()
+        print(table_results)
+
+
+    # The MySQL Connector/Python DBAPI has had many issues since its release, some of
+        # which may remain unresolved, and the mysqlconnector dialect is not tested as part of
+        # SQLAlchemy’s continuous integration. The recommended MySQL dialects are mysqlclient
+        # and PyMySQL.
+
 
