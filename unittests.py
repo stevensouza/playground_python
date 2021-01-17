@@ -1,8 +1,6 @@
 import datetime
 from unittest import TestCase
-
 from sqlalchemy import engine, create_engine
-
 import utils
 
 
@@ -86,37 +84,52 @@ class UnitTests(TestCase):
         col_types = df.select_dtypes(["datetime64"]).columns.tolist()
         self.assertListEqual([3], col_types)
 
-    def test_to_db(self):
+    def test_to_db_string_to_date_coercion(self):
+        """
+        Creates the following table if it doesn't exist or uses the existing one if it does.
+        This example converts the string formatted date columns to DATETIME
+
+        CREATE TABLE mytable (
+	        obj_col TEXT,
+	        int_col BIGINT,
+	        float_col FLOAT,
+	        date_col DATETIME
+        )
+        """
         MYTABLE = "mytable"
         data = self.data.copy()
         header = data.pop(0)
+        # defaults to convert any string cells to dates if they can be converted
         df = utils.to_pandas(data, header)
-        """
-        df = utils.to_pandas(data, header, strings_to_dates=False)
-
-        CREATE TABLE mytable (
-	        obj_col TEXT, 
-	        int_col BIGINT, 
-	        float_col FLOAT, 
-	        date_col TEXT
-        )       
-        """
         engine = create_engine('sqlite://', echo=True)
         utils.to_db(engine=engine,
                     dataframe=df,
                     table_name=MYTABLE)
-        """
-        creates teh following table if it doesn't exist or uses the existing one if it does.  Note you can also
-        drop the table if needed.
-        
-        CREATE TABLE mytable (
-	        obj_col TEXT, 
-	        int_col BIGINT, 
-	        float_col FLOAT, 
-	        date_col DATETIME
-        )
-        """
+
         table_results = engine.execute(f"SELECT * FROM {MYTABLE}").fetchall()
         self.assertEqual(3, len(table_results))
 
+    def test_to_db_no_string_to_date_coercion(self):
+        """
+        Creates the following table if it doesn't exist or uses the existing one if it does.
+        This example does not convert the string formatted date columns to DATETIME
+
+        CREATE TABLE mytable (
+            obj_col TEXT,
+            int_col BIGINT,
+            float_col FLOAT,
+            date_col TEXT
+        )
+        """
+        MYTABLE = "mytable"
+        data = self.data.copy()
+        header = data.pop(0)
+        df = utils.to_pandas(data, header, strings_to_dates=False)
+        engine = create_engine('sqlite://', echo=True)
+        utils.to_db(engine=engine,
+                    dataframe=df,
+                    table_name=MYTABLE)
+
+        table_results = engine.execute(f"SELECT * FROM {MYTABLE}").fetchall()
+        self.assertEqual(3, len(table_results))
 
