@@ -5,11 +5,11 @@ This code contains some basic python syntax experiments as well as some experime
 with moving Pandas DataFrames (tabular data) from/to different formats. 
 
 For example call a GoogleSheet API, convert that to a Pandas DataFrame and save the
-DataFrame to a database table.  Other sources and destination could be excel, csv, 
+DataFrame to a database table.  Other sources and destinations could be excel, csv, 
 parquet, avro.  See the following for the possible pandas datasources and
 datasinks: https://pandas.pydata.org/pandas-docs/stable/reference/io.html
 
-Description for the various directories
+Descriptions of the various directories
 - basics - Simple experiments with the basics of python like lists, for loops, functions and methods
 - pandas - Experiments with Pandas as well as experiments with getting data from GoogleSheets, Excel files 
 and data to/from database tables.
