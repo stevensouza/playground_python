@@ -1,5 +1,8 @@
 import datetime
 from unittest import TestCase
+
+from sqlalchemy import engine, create_engine
+
 import utils
 
 
@@ -8,7 +11,7 @@ class UnitTests(TestCase):
     data = [
         ["obj_col", "int_col", "float_col", "date_col"],
         ["joe", 10, 10.5, "12/20/2000"],
-        ["ed", 20, 20.5, "12/20/2000"],
+        ["ed", 20, 20.5, "12/21/2000"],
         ["al", 30, 30.5, None],
     ]
 
@@ -82,5 +85,38 @@ class UnitTests(TestCase):
 
         col_types = df.select_dtypes(["datetime64"]).columns.tolist()
         self.assertListEqual([3], col_types)
+
+    def test_to_db(self):
+        MYTABLE = "mytable"
+        data = self.data.copy()
+        header = data.pop(0)
+        df = utils.to_pandas(data, header)
+        """
+        df = utils.to_pandas(data, header, strings_to_dates=False)
+
+        CREATE TABLE mytable (
+	        obj_col TEXT, 
+	        int_col BIGINT, 
+	        float_col FLOAT, 
+	        date_col TEXT
+        )       
+        """
+        engine = create_engine('sqlite://', echo=True)
+        utils.to_db(engine=engine,
+                    dataframe=df,
+                    table_name=MYTABLE)
+        """
+        creates teh following table if it doesn't exist or uses the existing one if it does.  Note you can also
+        drop the table if needed.
+        
+        CREATE TABLE mytable (
+	        obj_col TEXT, 
+	        int_col BIGINT, 
+	        float_col FLOAT, 
+	        date_col DATETIME
+        )
+        """
+        table_results = engine.execute(f"SELECT * FROM {MYTABLE}").fetchall()
+        self.assertEqual(3, len(table_results))
 
 

@@ -55,11 +55,28 @@ def to_pandas(rows, header=None, strings_to_dates=True):
         return df
 
 
-def to_db(df):
-    engine = create_engine('sqlite://', echo=True)
-    df.to_sql(name='users', con=engine, if_exists='append', index=False)
-    delme1 = engine.execute("SELECT * FROM users").fetchall()
-    print(delme1)
+def to_db(dataframe, table_name, schema=None, chunksize=None, engine=None):
+    """
+     def to_sql(
+        self,
+        frame,
+        name,
+        if_exists="fail",
+        index=True,
+        index_label=None,
+        schema=None,
+        chunksize=None,
+        dtype=None,
+        method=None,
+    ):
+    :param dataframe:
+    :param table_name:
+    :return:
+    """
+    if engine is None:
+        engine = create_engine('sqlite://', echo=True)
+
+    dataframe.to_sql(name=table_name, con=engine, schema=schema, chunksize=chunksize, if_exists='append', index=False)
 #         # engine = create_engine('mysql://admin:root@localhost/delme')
 
 

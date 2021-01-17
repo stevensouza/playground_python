@@ -71,7 +71,7 @@ if __name__ == '__main__':
     data = spreadsheet.get_data(spreadsheet_id, sheet)
     header = data.pop(0)
     df = utils.to_pandas(data, header)
-    utils.to_db(df)
+    utils.to_db(dataframe=df, table_name="mytable")
 
 
 
