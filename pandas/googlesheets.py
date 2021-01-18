@@ -8,7 +8,7 @@ scopes = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/a
           "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
 """
 todo: 
-- move GoogleSheet test to standard test file
+x- move GoogleSheet test to standard test file
 - get rid of tableau_metrics and load_from_gsheet
 - create 2nd google sheets api 
 - put parameters in json file

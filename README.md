@@ -23,6 +23,9 @@ the following (doing this by memory so there may be more, but I think that is it
 - DBAccess/Used with Pandas - pip3 install sqlalchemy --user
 - DBAccess/Used with Pandas/Connect to MySql - pip3 install pymysql --user
 
+Notes:
+- All source types assume the first row is a header (i.e. GoogleSheets, Excel). However this could be easily fixed if needed
+
 Note from SqlAlchemy site, and the reason I used 'PyMySQL': 
 
 > "The MySQL Connector/Python DBAPI has had many issues since its release, some of  which may remain unresolved, and 

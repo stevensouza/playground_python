@@ -1,0 +1,10 @@
+{
+  "source": {
+    "type": "memory"
+  },
+  "destination": {
+    "type" : "db",
+    "url" : "sqlite://",
+    "table": "mytable"
+  }
+}

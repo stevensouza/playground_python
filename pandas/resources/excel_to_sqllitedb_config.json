@@ -1,0 +1,12 @@
+{
+  "source": {
+    "type": "excel",
+    "file": "resources/python_excel_test.xlsx",
+    "sheet": "Sheet1"
+  },
+  "destination": {
+    "type" : "db",
+    "url" : "sqlite://",
+    "table": "mytable"
+  }
+}

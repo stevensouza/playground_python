@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 from dateutil.parser import parse as parse_date
 from sqlalchemy import create_engine
@@ -91,3 +93,14 @@ def to_db(dataframe, table_name, schema=None, chunksize=None, engine=None):
         engine = create_engine('sqlite://', echo=True)
 
     dataframe.to_sql(name=table_name, con=engine, schema=schema, chunksize=chunksize, if_exists='append', index=False)
+
+
+def load_json(filename):
+    """
+        Load a json file into a python dictionary
+
+        :param filename: json file
+        :return: dictionary of json file
+    """
+    with open(filename) as file:
+        return json.load(file)

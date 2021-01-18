@@ -271,6 +271,11 @@ class UnitTests(TestCase):
             print(table_results)
             self.assertLess(1, len(table_results))
 
+    def test_load_json(self):
+        json = utils.load_json("resources/memory_to_sqllitedb_config.json")
+        print(json)
+        self.assertIsNotNone(json.get("source"))
+        self.assertEqual("memory", json["source"]["type"])
 
 
 

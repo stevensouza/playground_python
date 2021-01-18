@@ -1,0 +1,13 @@
+{
+  "source": {
+    "type": "googlesheets",
+    "credentials_file": "/Users/stevesouza/.kettle/client_secret.json",
+    "spreadsheet_id": "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo",
+    "sheet": "Sheet1"
+  },
+  "destination": {
+    "type" : "db",
+    "url" : "sqlite://",
+    "table": "mytable"
+  }
+}
