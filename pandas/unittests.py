@@ -5,11 +5,14 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 import utils
+import googlesheets
 
 """
     * Tests for converting various tabular data sets to a Pandas dataframe. For example: excel, lists
     * Tests for saving Pandas DataFrames to a database.
     * Tests for other utility methods such as data coercion
+
+    Assertions - https://www.kite.com/python/docs/unittest.TestCase
 """
 class UnitTests(TestCase):
 
@@ -237,5 +240,40 @@ class UnitTests(TestCase):
         table_results = engine.execute(f"SELECT * FROM {MYTABLE}").fetchall()
         print(table_results)
         self.assertEqual(3, len(table_results))
+
+    def test_google_sheets_to_db_string_to_date_coercion(self):
+        """
+            This test requires access to a google service account secrets json file.  This file won't be checked
+            into source control so the test can be disabled.
+        """
+        enabled = True
+        if enabled:
+            MYTABLE = "mytable_googlesheet"
+            creds_file = "/Users/stevesouza/.kettle/client_secret.json"
+            spreadsheet_id = "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo"
+            sheet = "Sheet1"  # A1 notation
+            spreadsheet = googlesheets.GoogleSheet(creds_file)
+
+            spreadsheet.get_modified_time(spreadsheet_id)
+            self.assertIsNotNone(spreadsheet.get_modified_time(spreadsheet_id))
+            data = spreadsheet.get_data(spreadsheet_id, sheet)
+            print(data)
+            header = data.pop(0)
+            print(header)
+
+            df = utils.to_pandas(data, header)
+            engine = create_engine('sqlite://', echo=True)
+            utils.to_db(engine=engine,
+                    dataframe=df,
+                    table_name=MYTABLE)
+
+            table_results = engine.execute(f"SELECT * FROM {MYTABLE}").fetchall()
+            print(table_results)
+            self.assertLess(1, len(table_results))
+
+
+
+
+
 
 
