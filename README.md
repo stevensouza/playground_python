@@ -1,10 +1,5 @@
-# playground_python
-Repo for Python experiments...
-
 # Repo Overview
-
-This repo contains some basic python syntax experiments as well as some experiments
-with moving Pandas DataFrames (tabular data) from/to different data destinations and formats.
+This repo contains Python experiments.
 
 Descriptions of the various directories
 * **basics** - Simple experiments with the basics of python like lists, for loops, functions and methods
