@@ -1,6 +1,5 @@
 import google.oauth2.service_account
 import googleapiclient.discovery
-import utils
 
 # import tableau_metrics
 # read google sheet - https://developers.google.com/sheets/api/samples/reading

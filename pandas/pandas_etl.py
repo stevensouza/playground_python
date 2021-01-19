@@ -1,11 +1,12 @@
 import sys
+from datetime import datetime
 
-from pandas._libs.tslibs.nattype import NaTType
-from pandas._libs.tslibs.timestamps import Timestamp
-from sqlalchemy import create_engine
 import pandas as pd
-import utils
+from pandas._libs.tslibs.nattype import NaTType
+from sqlalchemy import create_engine
+
 import googlesheets
+import utils
 
 """
     Program that uses a config file that contains a 'source' (excel file, google sheet, database etc) and takes this tabular
@@ -40,10 +41,10 @@ import googlesheets
 
 
 def _clean_for_googlesheets(value):
-    if isinstance(value, Timestamp):
-        return str(value)
-    elif isinstance(value, NaTType):
+    if isinstance(value, NaTType):
         return None
+    elif isinstance(value, datetime):
+        return str(value)
     else:
         return value
 
