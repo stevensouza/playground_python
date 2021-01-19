@@ -15,12 +15,11 @@ Further explanation of pandas_etl.py - As an example a GoogleSheet API could be 
 spreadsheet data and this data would be converted to a Pandas DataFrame and the DataFrame could be saved 
  to a database table.  Currently, database (sql), Excel, and GoogleSheets are allowed
 as both sources and destinations. The Panda's library is used to implement pandas_etl.py and so any
-data format that Pandas supports could also easily be added (Parquet, ORO, CSV, JSON,..).  
-See the following for the possible pandas datasources and
+data format that Pandas supports could also easily be added (Parquet, ORO, CSV, JSON,..). See the following for the possible pandas datasources and
 datasinks: https://pandas.pydata.org/pandas-docs/stable/reference/io.html
 
 pandas_etl.py takes a config file (json) as an argument. This file has configuration information for both the
-source and destination.  The following directory has examples of all supported sources and destinations: https://github.com/stevensouza/playground_python/tree/master/pandas/resources.  
+source and destination.  The following directory has examples for all supported sources and destinations: https://github.com/stevensouza/playground_python/tree/master/pandas/resources.  
 
 A few examples follow.  The examples can be invoked from within the 'pandas' directory. 
 (Note: In the cases of mysql and GoogleSheets examples you would need to change them to use your respective credentials):
@@ -31,11 +30,11 @@ A few examples follow.  The examples can be invoked from within the 'pandas' dir
 * Copy a mysql table to GoogleSheets (change credentials)
   * python3 pandas_etl.py resources/mysqldb_to_googlesheet_config.json
 * Copy a dummy memory table to GoogleSheets (change credentials)
-  * pandas_etl.py resources/memory_to_googlesheet_config.json
+  * python3 pandas_etl.py resources/memory_to_googlesheet_config.json
  
 
-To run these programs I used python3 v 3.7.3 on a macbook pro. I installed
-the following (doing this by memory so there may be more, but I think that is it.)
+To run these programs I used python3 v 3.7.3 on a macbook pro. 
+The following need to be installed for 'pandas_etl.py' to run (doing this by memory so there may be more, but I think that is it.)
 * GoogleSheets. The code uses a google service account to grab spreadsheet data rows and convert them to a Pandas DataFrame - pip3  install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 * Pandas - pip3 install pandas --user
 * DBAccess/Used with Pandas - pip3 install sqlalchemy --user
