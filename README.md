@@ -1,6 +1,8 @@
 # playground_python
 Repo for Python experiments...
 
+# Repo Overview
+
 This repo contains some basic python syntax experiments as well as some experiments
 with moving Pandas DataFrames (tabular data) from/to different data destinations and formats.
 
@@ -9,6 +11,8 @@ Descriptions of the various directories
 * **pandas** - Experiments with Pandas as well as experiments with copying data from databases, GoogleSheets, Excel files 
 and data to the same. This ability to copy source tabular data to a destination data store is implemented in 'pandas_etl.py'. 
  The implementation looks as follows: datasource->Pandas DataFrame->destination. This capability warrants further explanation. 
+
+# pandas_etl.py
 
 The following diagram depicts how 'pandas_etl.py' works: ![pandas_etl.py Overview Diagram](pandas_etl_overview.png)
 
