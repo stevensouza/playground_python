@@ -6,16 +6,7 @@ import googleapiclient.discovery
 scopes = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
           "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
 """
-todo: 
-x- move GoogleSheet test to standard test file
-- get rid of tableau_metrics and load_from_gsheet
-- create 2nd google sheets api 
-- put parameters in json file
-- come up with example driver program
-- can i clean up scopes
-- exception class 
-- errors in general. i.e. what happens if exception is thrown?
-- email code?
+    Class that gets GoogleSheet data rows and also can update GoogleSheet rows.
 """
 
 
