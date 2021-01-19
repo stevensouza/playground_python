@@ -1,0 +1,8 @@
+{
+  "source": {
+    "type": "memory"
+  },
+  "destination": {
+    "type" : "I_DO_NOT_EXIST"
+  }
+}

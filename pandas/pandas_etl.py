@@ -7,6 +7,7 @@ from sqlalchemy import create_engine
 
 import googlesheets
 import utils
+from exceptions import UnsupportedDataDestination, UnsupportedDataSource
 
 """
     Program that uses a config file that contains a 'source' (excel file, google sheet, database etc) and takes this tabular
@@ -96,9 +97,9 @@ class PandasEtl:
             header = data.pop(0)
             dataframe = utils.to_pandas(data, header)
             return dataframe
+        else:
+            raise UnsupportedDataSource(f"The following 'source.type' is not supported: {source_type}")
 
-        # TODO fall through should be exception
-        return None
 
     def to_destination(self, dataframe):
         dest_type = self.config['destination']['type']
@@ -135,6 +136,8 @@ class PandasEtl:
             data.extend(dataframe.values.tolist())
             results = spreadsheet.put_data(spreadsheet_id, sheet, data, overwrite_or_append=overwrite_or_append)
             print(results)
+        else:
+            raise UnsupportedDataDestination(f"The following 'destination.type' is not supported: {dest_type}")
 
 
 if __name__ == '__main__':

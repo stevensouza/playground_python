@@ -1,0 +1,10 @@
+{
+  "source": {
+    "type": "I_DO_NOT_EXIST"
+  },
+  "destination": {
+    "type" : "db",
+    "url" : "sqlite://",
+    "table": "mytable"
+  }
+}
