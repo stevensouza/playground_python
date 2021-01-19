@@ -44,3 +44,31 @@ class GoogleSheet:
                                                        valueRenderOption="UNFORMATTED_VALUE",
                                                        dateTimeRenderOption="FORMATTED_STRING").execute()
             return data['values']
+
+    def put_data(self, google_sheet_id, sheet_a1_notation, rows, value_input_option="USER_ENTERED", overwrite_or_append="OVERWRITE"):
+        """
+        Update ta google spreadsheet witht the specified rows.
+            https://developers.google.com/sheets/api/samples/writing
+            https://developers.google.com/sheets/api/guides/values#python_2
+            https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append#InsertDataOption
+
+        :param overwrite_or_append: OVERWRITE or APPEND rows
+        :param google_sheet_id:
+        :param sheet_a1_notation: The sheet name
+        :param rows: rows as a list of lists [['joe','smith'],['joe','jones']]. Note a header can be included as
+            the first row.
+        :param value_input_option: How to format the cells. See google documentation
+        :return: The results from the Google API call
+        """
+        with googleapiclient.discovery.build('sheets', 'v4', credentials=self.creds) as service:
+            if overwrite_or_append == "OVERWRITE":  # default
+                service.spreadsheets().values().clear(spreadsheetId=google_sheet_id,
+                                                      range=sheet_a1_notation,
+                                                      body={}).execute()
+
+            body = {"values": rows}
+            return service.spreadsheets().values().append(
+                spreadsheetId=google_sheet_id,
+                range=sheet_a1_notation,
+                valueInputOption=value_input_option,
+                body=body).execute()

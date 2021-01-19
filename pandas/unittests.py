@@ -271,6 +271,38 @@ class UnitTests(TestCase):
             print(table_results)
             self.assertLess(1, len(table_results))
 
+    def test_google_sheets_overwrite(self):
+        """
+            This test requires access to a google service account secrets json file.  This file won't be checked
+            into source control so the test can be disabled.
+        """
+        enabled = True
+        if enabled:
+            creds_file = "/Users/stevesouza/.kettle/client_secret.json"
+            spreadsheet_id = "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo"
+            # TODO Note as is currently written this sheet must exist before it is executed.
+            sheet = "PythonDestination"  # A1 notation
+            spreadsheet = googlesheets.GoogleSheet(creds_file)
+            results = spreadsheet.put_data(spreadsheet_id, sheet, self.data)
+            print(results)
+            self.assertEqual(4, results['updates']['updatedRows'])
+
+    def test_google_sheets_append(self):
+        """
+            This test requires access to a google service account secrets json file.  This file won't be checked
+            into source control so the test can be disabled.
+        """
+        enabled = True
+        if enabled:
+            creds_file = "/Users/stevesouza/.kettle/client_secret.json"
+            spreadsheet_id = "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo"
+            # TODO Note as is currently written this sheet must exist before it is executed.
+            sheet = "PythonDestination"  # A1 notation
+            spreadsheet = googlesheets.GoogleSheet(creds_file)
+            results = spreadsheet.put_data(spreadsheet_id, sheet, self.data, overwrite_or_append="APPEND")
+            print(results)
+            self.assertEqual(4, results['updates']['updatedRows'])
+
     def test_load_json(self):
         json = utils.load_json("resources/memory_to_sqllitedb_config.json")
         print(json)

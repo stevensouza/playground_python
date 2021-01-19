@@ -1,0 +1,12 @@
+{
+  "source": {
+    "type" : "memory"
+  },
+  "destination": {
+    "type": "googlesheets",
+    "credentials_file": "/Users/stevesouza/.kettle/client_secret.json",
+    "spreadsheet_id": "18VF0mB6usVkorgCULDqd4Ib9UrWf8MnaqYxrtnYcsvo",
+    "sheet": "PythonDestination",
+    "overwrite_or_append": "OVERWRITE"
+  }
+}

@@ -71,9 +71,13 @@ def to_pandas(rows, header=None, strings_to_dates=True):
     if strings_to_dates:
         # Change all dataframe string values of format date (for example: "12/10/2013" to actual dates.
         # Leave all other cells alone.
-        return df.applymap(lambda cell_value: date_coercion(cell_value))
+        return dataframe_date_coercion(df)
     else:
         return df
+
+
+def dataframe_date_coercion(df):
+    return df.applymap(lambda cell_value: date_coercion(cell_value))
 
 
 def to_db(dataframe, table_name, schema=None, chunksize=None, engine=None):

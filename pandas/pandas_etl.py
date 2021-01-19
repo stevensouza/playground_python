@@ -1,5 +1,7 @@
 import sys
 
+from pandas._libs.tslibs.nattype import NaTType
+from pandas._libs.tslibs.timestamps import Timestamp
 from sqlalchemy import create_engine
 import pandas as pd
 import utils
@@ -22,6 +24,15 @@ import googlesheets
 """
 
 
+def _clean_for_googlesheets(value):
+    if isinstance(value, Timestamp):
+        return str(value)
+    elif isinstance(value, NaTType):
+        return None
+    else:
+        return value
+
+
 class PandasEtl:
     memory_data = [
         ["obj_col", "int_col", "float_col", "date_col"],
@@ -35,7 +46,6 @@ class PandasEtl:
 
     def run(self):
         dataframe = self.from_source()
-        print(dataframe)
         self.to_destination(dataframe)
 
     def from_source(self):
@@ -47,6 +57,12 @@ class PandasEtl:
             header = data.pop(0)
             dataframe = utils.to_pandas(data, header)
             return dataframe
+        elif source_type == "db":
+            query = self.config['source']['query']
+            print(f" source.query: {query}")
+            engine = create_engine(self.config['source']['url'], echo=True)
+            dataframe = pd.read_sql(query, engine)
+            return utils.dataframe_date_coercion(dataframe)
         elif source_type == "excel":
             excel_file = self.config['source']['file']
             sheet = self.config['source']['sheet']
@@ -87,6 +103,21 @@ class PandasEtl:
                                 datetime_format=self.config['destination']['datetime_format'],
                                 date_format=self.config['destination']['date_format']) as writer:
                 dataframe.to_excel(excel_writer=writer, sheet_name=sheet, index=False)
+        elif dest_type == "googlesheets":
+            spreadsheet_id = self.config['destination']['spreadsheet_id']
+            sheet = self.config['destination']['sheet']
+            overwrite_or_append = self.config['destination']['overwrite_or_append']
+            print(
+                f" destination.spreadsheet_id: {spreadsheet_id}, destination.sheet: {sheet}, destination.overwrite_or_append: {overwrite_or_append}")
+
+            spreadsheet = googlesheets.GoogleSheet(self.config['destination']['credentials_file'])
+            # Change types that google sheets does not support (pandas dates for example) into ones it does
+            dataframe = dataframe.applymap(lambda value: _clean_for_googlesheets(value))
+            # Change pandas data into a format that google spreadsheets api supports (header, and data in a list)
+            data = [dataframe.columns.values.tolist()]
+            data.extend(dataframe.values.tolist())
+            results = spreadsheet.put_data(spreadsheet_id, sheet, data, overwrite_or_append=overwrite_or_append)
+            print(results)
 
 
 if __name__ == '__main__':
