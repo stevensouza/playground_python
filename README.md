@@ -1,14 +1,14 @@
 # playground_python
-Place for Python experiments
+Repo for Python experiments...
 
-This code contains some basic python syntax experiments as well as some experiments
-with moving Pandas DataFrames (tabular data) from/to different formats.
+This repo contains some basic python syntax experiments as well as some experiments
+with moving Pandas DataFrames (tabular data) from/to different data destinations and formats.
 
 Descriptions of the various directories
-* basics - Simple experiments with the basics of python like lists, for loops, functions and methods
-* pandas - Experiments with Pandas as well as experiments with getting data from GoogleSheets, Excel files 
-and data to/from database tables. This ability to copy source tabular data to a destination data store is implemented in 'pandas_etl.py'.  
-This capability warrants further explanation. The implementation looks as follows: datasource->Pandas DataFrame->destination.
+* **basics** - Simple experiments with the basics of python like lists, for loops, functions and methods
+* **pandas** - Experiments with Pandas as well as experiments with copying data from databases, GoogleSheets, Excel files 
+and data to the same. This ability to copy source tabular data to a destination data store is implemented in 'pandas_etl.py'. 
+ The implementation looks as follows: datasource->Pandas DataFrame->destination. This capability warrants further explanation. 
 
 The following diagram depicts how 'pandas_etl.py' works: ![pandas_etl.py Overview Diagram](pandas_etl_overview.png)
 
@@ -23,19 +23,19 @@ datasinks: https://pandas.pydata.org/pandas-docs/stable/reference/io.html
 pandas_etl.py takes a config file (json) as an argument. This file has configuration information for both the
 source and destination.  The following directory has examples of all supported sources and destinations: https://github.com/stevensouza/playground_python/tree/master/pandas/resources.  
 
-A few sample calls follow.  The examples can be invoked from within the 'pandas' directory. 
-(Note: In the cases of mysql and GoogleSheets examples you would need to change them to use your respective accounts):
+A few examples follow.  The examples can be invoked from within the 'pandas' directory. 
+(Note: In the cases of mysql and GoogleSheets examples you would need to change them to use your respective credentials):
 * Copy an in memory data structure to a sql lite internal database.  This example can be run as is so is a good starting point:
   * python3 pandas_etl.py resources/memory_to_sqllitedb_config.json
-* Copy a mysql table to GoogleSheets
+* Copy an Excel table to a sqllite database (works as is)
+    *  python3 pandas_etl.py resources/excel_to_sqllitedb_config.json
+* Copy a mysql table to GoogleSheets (change credentials)
   * python3 pandas_etl.py resources/mysqldb_to_googlesheet_config.json
-* Copy an Excel table to a sqllite database 
-  *  python3 pandas_etl.py resources/excel_to_sqllitedb_config.json
-* Copy a dummy memory table to GoogleSheets 
+* Copy a dummy memory table to GoogleSheets (change credentials)
   * pandas_etl.py resources/memory_to_googlesheet_config.json
  
 
-To run these programs I used python3 v 3.7.3 and installed
+To run these programs I used python3 v 3.7.3 on a macbook pro. I installed
 the following (doing this by memory so there may be more, but I think that is it.)
 * GoogleSheets. The code uses a google service account to grab spreadsheet data rows and convert them to a Pandas DataFrame - pip3  install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 * Pandas - pip3 install pandas --user
