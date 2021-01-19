@@ -18,6 +18,21 @@ import googlesheets
         * python3 pandas_etl.py resources/googlesheet_to_mysqldb_config.json
         * python3 pandas_etl.py resources/excel_to_excel_config.json
         
+    Look into the resources directory for other config files.  In general data sources can be
+        * database/db
+        * googlesheets
+        * excel
+        * memory (for debugging. It uses a hardcoded dataset)
+        
+    Destination data sinks:
+        * database/db
+        * googlesheets
+        * excel      
+        
+    Pandas supports other datasets such as Parquet, csv, json and so those could also easily be added
+    as a source or destination.
+        
+        
     Here is further documentation on the source/destination types pandas allows: 
     https://pandas.pydata.org/pandas-docs/stable/reference/frame.html#serialization-io-conversion
              
