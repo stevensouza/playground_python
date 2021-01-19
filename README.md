@@ -5,7 +5,7 @@ Descriptions of the various directories
 * **basics** - Simple experiments with the basics of python like lists, for loops, functions and methods
 * **pandas** - Experiments with Pandas as well as experiments with copying data from databases, GoogleSheets, Excel files 
 and data to the same. This ability to copy source tabular data to a destination data store is implemented in 'pandas_etl.py'. 
- The implementation looks as follows: datasource->Pandas DataFrame->destination. This capability warrants further explanation. 
+ The implementation looks as follows: datasource -> Pandas DataFrame -> destination. This capability warrants further explanation. 
 
 # pandas_etl.py
 
