@@ -31,7 +31,11 @@ A few examples follow.  The examples can be invoked from within the 'pandas' dir
   * python3 pandas_etl.py resources/mysqldb_to_googlesheet_config.json
 * Copy a dummy memory table to GoogleSheets (change credentials)
   * python3 pandas_etl.py resources/memory_to_googlesheet_config.json
- 
+* Copy a large googlesheet to a sql lite table (change credentials). The sheet had about 
+  110,000 rows and 10 columns (8 columns contained short strings, one column contained 
+  an integer and one column contained a date). It took about 80 seconds to run.
+    * python3 pandas_etl.py resources/biggooglesheet_to_sqllitedb_config.json
+
 
 To run these programs I used python3 v 3.7.3 on a macbook pro. 
 The following need to be installed for 'pandas_etl.py' to run (doing this by memory so there may be more, but I think that is it.)
