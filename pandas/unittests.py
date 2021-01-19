@@ -62,7 +62,7 @@ class UnitTests(TestCase):
         df = utils.to_pandas(data, header)
         print(df)
 
-        # note there may be better ways to do this.  Comparing if fields are of expected types
+    # note there may be better ways to do this.  Comparing if fields are of expected types
         col_types = df.select_dtypes(["object"]).columns.tolist()
         self.assertListEqual(["obj_col"], col_types)
 
