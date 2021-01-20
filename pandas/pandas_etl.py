@@ -58,8 +58,8 @@ class PandasEtl:
         ["al", 30, 30.5, None],
     ]
 
-    def __init__(self, config_file):
-        self.config = utils.load_json(config_file)
+    def __init__(self, config_arg):
+        self.config = config_arg
 
     def run(self):
         dataframe = self.from_source()
@@ -99,7 +99,6 @@ class PandasEtl:
             return dataframe
         else:
             raise UnsupportedDataSource(f"The following 'source.type' is not supported: {source_type}")
-
 
     def to_destination(self, dataframe):
         dest_type = self.config['destination']['type']
@@ -145,7 +144,8 @@ if __name__ == '__main__':
     # TODO exception could trigger email etc.
     if len(sys.argv) == 2:
         configuration_file = sys.argv[1]
-        etl = PandasEtl(configuration_file)
+        config = utils.load_json(configuration_file)
+        etl = PandasEtl(config)
         etl.run()
     else:
         print(
