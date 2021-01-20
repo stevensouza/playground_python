@@ -11,7 +11,9 @@ and data to the same. This ability to copy source tabular data to a destination 
 
 The following diagram depicts how 'pandas_etl.py' works: ![pandas_etl.py Overview Diagram](pandas_etl_overview.png)
 
-Further explanation of pandas_etl.py - As an example a GoogleSheet API could be called to get 
+## Further explanation of pandas_etl.py:
+
+As an example a GoogleSheet API could be called to get 
 spreadsheet data and this data would be converted to a Pandas DataFrame and the DataFrame could be saved 
  to a database table.  Currently, database (sql), Excel, and GoogleSheets are allowed
 as both sources and destinations. The Panda's library is used to implement pandas_etl.py and so any
@@ -20,6 +22,8 @@ datasinks: https://pandas.pydata.org/pandas-docs/stable/reference/io.html
 
 pandas_etl.py takes a config file (json) as an argument. This file has configuration information for both the
 source and destination.  The following directory has examples for all supported sources and destinations: https://github.com/stevensouza/playground_python/tree/master/pandas/resources.  
+
+## Examples:
 
 A few examples follow.  The examples can be invoked from within the 'pandas' directory. 
 (Note: In the cases of mysql and GoogleSheets examples you would need to change them to use your respective credentials):
@@ -36,6 +40,7 @@ A few examples follow.  The examples can be invoked from within the 'pandas' dir
   an integer and one column contained a date). It took about 80 seconds to run.
     * python3 pandas_etl.py resources/biggooglesheet_to_sqllitedb_config.json
 
+## Prerequisites:
 
 To run these programs I used python3 v 3.7.3 on a macbook pro. 
 The following need to be installed for 'pandas_etl.py' to run (doing this by memory so there may be more, but I think that is it.)
@@ -44,7 +49,7 @@ The following need to be installed for 'pandas_etl.py' to run (doing this by mem
 * DBAccess/Used with Pandas - pip3 install sqlalchemy --user
 * DBAccess/Used with Pandas/Connect to MySql - pip3 install pymysql --user
 
-Notes:
+## Notes:
 * All source types assume the first row is a header (i.e. GoogleSheets, Excel). However this could be easily fixed if needed
 
 Note from SqlAlchemy site, and the reason I used 'PyMySQL': 
