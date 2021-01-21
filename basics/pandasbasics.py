@@ -15,13 +15,21 @@ class PandasUnitTests(TestCase):
         ["al", 30, 30.5, None],
     ]
 
-    df = pd.DataFrame(data, columns=header)
+    df = pd.DataFrame(data=data, columns=header)
 
-    def test_me(self):
-        print(self.df)
-        print(self.df.copy())
-        print(self.df["obj_col"])
-        print(self.df[:2])
+    def test_info(self):
+        print(self.df.info)
+        print(self.df.describe)
+
+    def test_data_manipulation(self):
+        df = self.df
+        print(f"dataframe:\n {df}")
+        print(f"head:\n {df.head()}")
+        print(f"shape:\n {df.shape}")
+        df.copy()
+        print(f"obj_col: \n{df['obj_col']}")
+        print(f"slice: \n{df[:2]}")
+
 
     def test_plot(self):
         # fig, ax = plt.subplots()
