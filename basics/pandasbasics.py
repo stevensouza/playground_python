@@ -1,5 +1,6 @@
 from unittest import TestCase
 import pandas as pd
+import matplotlib.pyplot as plt
 
 """
   Pandas experiments
@@ -21,6 +22,13 @@ class PandasUnitTests(TestCase):
         print(self.df.copy())
         print(self.df["obj_col"])
         print(self.df[:2])
+
+    def test_plot(self):
+        # fig, ax = plt.subplots()
+        # ax = self.df['int_col'].plot.hist()
+        self.df['int_col'].plot.hist()
+        plt.show()
+
 
 
 
