@@ -19,19 +19,37 @@ class PandasUnitTests(TestCase):
     df = pd.DataFrame(data=data, columns=header)
 
     def test_info(self):
-        print(self.df.info)
-        print(self.df.describe)
+        df = self.df
+        print(df.info())
+        print(df.columns)
 
     def test_data_manipulation(self):
         df = self.df
         print(f"dataframe:\n {df}")
         print(f"head:\n {df.head()}")
+        print(f"tail:\n {df.tail()}")
         print(f"shape:\n {df.shape}")
+        print(f"num rows:\n {df.shape[0]}")
+        print(f"num cols:\n {df.shape[1]}")
+        print(f"num rows:\n {len(df)}")
+
         df.copy()
         print(f"obj_col: \n{df['obj_col']}")
+        print(f"obj_col, int_col: \n{df[['int_col','obj_col']]}")
         print(f"slice: \n{df[:2]}")
 
-    def test_stats(self):
+        # get by row
+        print(f"get first row by index: \n{df.iloc[0]}")
+        print(f"get last row by index: \n{df.iloc[-1]}")
+        print(f"get first row by label (in this case same as index): \n{df.loc[0]}")
+        print(f"iloc [2],[1] cell value:\n {df.iloc[[2],[1]]}")
+        print(f"return 2 columns starting with row 2:\n {df.loc[2:, ['obj_col','int_col']]}")
+        print(f"return last columns from row 2:\n {df.iloc[2:, 1:]}")
+        print(f"cell in 2nd row and 'obj_col':\n {df.loc[1, 'obj_col']}")
+        print(f"first 2 rows and repeat first column:\n {df.iloc[[0,1], [0,0]]}")
+
+
+def test_stats(self):
         df = self.df
         # some dataframe stats functions
         print(f"\ndataframe.describe():\n {df.describe()}")
