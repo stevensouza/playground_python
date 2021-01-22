@@ -28,17 +28,17 @@ source and destination.  The following directory has examples for all supported 
 A few examples follow.  The examples can be invoked from within the 'pandas' directory. 
 (Note: In the cases of mysql and GoogleSheets examples you would need to change them to use your respective credentials):
 * Copy an in memory data structure to a sql lite internal database.  This example can be run as is so is a good starting point:
-  * python3 pandas_etl.py resources/memory_to_sqllitedb_config.json
+  * **python3 pandas_etl.py resources/memory_to_sqllitedb_config.json**
 * Copy an Excel table to a sqllite database (works as is)
-    *  python3 pandas_etl.py resources/excel_to_sqllitedb_config.json
+  *  **python3 pandas_etl.py resources/excel_to_sqllitedb_config.json**
 * Copy a mysql table to GoogleSheets (change credentials)
-  * python3 pandas_etl.py resources/mysqldb_to_googlesheet_config.json
+  * **python3 pandas_etl.py resources/mysqldb_to_googlesheet_config.json**
 * Copy a dummy memory table to GoogleSheets (change credentials)
-  * python3 pandas_etl.py resources/memory_to_googlesheet_config.json
+  * **python3 pandas_etl.py resources/memory_to_googlesheet_config.json**
 * Copy a large googlesheet to a sql lite table (change credentials). The sheet had about 
   110,000 rows and 10 columns (8 columns contained short strings, one column contained 
   an integer and one column contained a date). It took about 80 seconds to run.
-    * python3 pandas_etl.py resources/biggooglesheet_to_sqllitedb_config.json
+    * **python3 pandas_etl.py resources/biggooglesheet_to_sqllitedb_config.json**
 
 ## Prerequisites:
 
