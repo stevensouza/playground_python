@@ -48,7 +48,6 @@ class PandasUnitTests(TestCase):
         print(f"cell in 2nd row and 'obj_col':\n {df.loc[1, 'obj_col']}")
         print(f"first 2 rows and repeat first column:\n {df.iloc[[0,1], [0,0]]}")
 
-
     def test_stats(self):
         df = self.df
         # some dataframe stats functions
