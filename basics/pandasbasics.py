@@ -49,7 +49,7 @@ class PandasUnitTests(TestCase):
         print(f"first 2 rows and repeat first column:\n {df.iloc[[0,1], [0,0]]}")
 
 
-def test_stats(self):
+    def test_stats(self):
         df = self.df
         # some dataframe stats functions
         print(f"\ndataframe.describe():\n {df.describe()}")
@@ -73,8 +73,7 @@ def test_stats(self):
         print(f"\ndataframe[['int_col','float_col']].describe():\n {df.groupby('obj_col').describe()}")
         print(f"\ndataframe[['int_col','float_col']].describe():\n {df.groupby(['obj_col','int_col'])['float_col'].describe()}")
 
-
-def test_plot(self):
+    def test_plot(self):
         # fig, ax = plt.subplots()
         # ax = self.df['int_col'].plot.hist()
         self.df['int_col'].plot.hist()
