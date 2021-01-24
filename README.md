@@ -48,6 +48,7 @@ The following need to be installed for 'pandas_etl.py' to run (doing this by mem
 * Pandas - pip3 install pandas --user
 * DBAccess/Used with Pandas - pip3 install sqlalchemy --user
 * DBAccess/Used with Pandas/Connect to MySql - pip3 install pymysql --user
+* Excel/Used with Pandas - pip3 install --upgrade XlsxWriter --user
 
 ## Notes:
 * All source types assume the first row is a header (i.e. GoogleSheets, Excel). However this could be easily fixed if needed

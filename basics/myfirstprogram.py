@@ -17,7 +17,11 @@ import myfunctions
 # call as: func.sayhi("steve")
 # you can call everything with this approach
 import myfunctions as func
+"""
+Simple test code of python basics.
 
+To see versions of installed libraries: pip/pip3 freeze
+"""
 
 def basics():
     """my comment"""
