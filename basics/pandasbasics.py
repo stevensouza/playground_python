@@ -78,9 +78,29 @@ class PandasUnitTests(TestCase):
     def test_plot(self):
         # fig, ax = plt.subplots()
         # ax = self.df['int_col'].plot.hist()
+        # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html
+
         self.df['int_col'].plot.hist()
         plt.show()
-
+        self.df['int_col'].plot(kind="bar")
+        plt.show()
+        self.df['int_col'].plot(kind="barh")
+        plt.show()
+        self.df['int_col'].plot(kind="hist")
+        plt.show()
+        # kind    str
+        # The kind of plot to produce:
+        #     ‘line’ : line plot (default)
+        #     ‘bar’ : vertical bar plot
+        #     ‘barh’ : horizontal bar plot
+        #     ‘hist’ : histogram
+        #     ‘box’ : boxplot
+        #     ‘kde’ : Kernel Density Estimation plot
+        #     ‘density’ : same as ‘kde’
+        #     ‘area’ : area plot
+        #     ‘pie’ : pie plot
+        #     ‘scatter’ : scatter plot
+        #     ‘hexbin’ : hexbin plot.
 
 
 
