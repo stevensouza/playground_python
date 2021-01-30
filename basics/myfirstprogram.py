@@ -1,27 +1,30 @@
-import sys, os
+import os
+import sys
 
-# basic python syntax experiments
-
-# call as: sayhi("steve")
-# you can only call sayhi function with this approach
-from person import Person, Child
-from myfunctions import sayhi
-# could do this too...
-from myfunctions import sayhi as hi
 # from myfunctions import *
 # from myfunctions import sayhi, saybye, saylater
 # call as: myfunctions.sayhi("steve")
 # you can call everything with this approach
-import myfunctions
+from pandas import DataFrame
 
+import myfunctions
 # call as: func.sayhi("steve")
 # you can call everything with this approach
 import myfunctions as func
+from myfunctions import sayhi
+# could do this too...
+from myfunctions import sayhi as hi
+# call as: sayhi("steve")
+# you can only call sayhi function with this approach
+from person import Person, Child
+
+# basic python syntax experiments
 """
 Simple test code of python basics.
 
 To see versions of installed libraries: pip/pip3 freeze
 """
+
 
 def basics():
     """my comment"""
@@ -56,7 +59,6 @@ def basics():
 
 
 def list_methods():
-    global value, numlist
     print("\n************* LIST_METHODS")
     # note strings can be in single or double quotes
     # list=array
@@ -106,7 +108,6 @@ def list_methods():
 
 
 def conditionals_method():
-    global numlist
     print("\n************* CONDITIONALS_METHOD")
     # conditionals
     name = "steve"
@@ -129,7 +130,6 @@ def conditionals_method():
 
 
 def dictionary_method():
-    global value
     print("\n************* DICTIONARY_METHOD")
     # dictionaries - like a java map i.e key/value pairs
     #  comma on last item is a good practice
@@ -191,6 +191,35 @@ def env_variables():
     print(os.environ.get('USER'))
     print(os.environ.get('idonotexist'))
     print(os.environ.get('PATH'))
+    print(sys.path, sys.version_info)
+    print(sys.version_info)
+
+
+def os_commands():
+    print(os.cpu_count())
+    print(os.getlogin())
+    print(os.system("ps -e -o time,upr,cpu,command"))
+    print(os.popen('ps -ef | head -3').read())
+    df = _ps_to_dataframe()
+    print(df)
+    print(df.shape)
+    print(df.info)
+    print(df["COMMAND"].tolist())
+
+
+def _ps_to_dataframe():
+    # the following returns the ps command output as one string with returns after each line
+    ps_str = os.popen("ps -e -o time,upr,cpu,command").read()
+    # to it to a list with entries as each row returned from the ps command
+    ps_rows = ps_str.splitlines()
+
+    # because command can have spaces in it the following will return the command as one and not break it up
+    # with its whitespace. i.e return as one string: /usr/sbin/systemstats --daemon. Anything after the 3rd
+    # column is grouped as 1 column.  So this will have 4 columns: time,upr,cpu,command
+    ps_list = [row.split(maxsplit=3) for row in ps_rows]
+    ps_list_header = ps_list.pop(0)
+    df = DataFrame(data=ps_list, columns=ps_list_header)
+    return df
 
 
 # default value of 'steve'
@@ -215,3 +244,4 @@ if __name__ == '__main__':
     function_module()
     use_class()
     env_variables()
+    os_commands()

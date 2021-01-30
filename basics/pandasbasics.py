@@ -1,6 +1,7 @@
 from unittest import TestCase
-import pandas as pd
+
 import matplotlib.pyplot as plt
+import pandas as pd
 
 """
   Pandas experiments
@@ -35,21 +36,37 @@ class PandasUnitTests(TestCase):
 
         df.copy()
         print(f"obj_col: \n{df['obj_col']}")
-        print(f"obj_col, int_col: \n{df[['int_col','obj_col']]}")
+        print(f"obj_col, int_col: \n{df[['int_col', 'obj_col']]}")
         print(f"slice: \n{df[:2]}")
 
         # get by row
         print(f"get first row by index: \n{df.iloc[0]}")
         print(f"get last row by index: \n{df.iloc[-1]}")
         print(f"get first row by label (in this case same as index): \n{df.loc[0]}")
-        print(f"iloc [2],[1] cell value:\n {df.iloc[[2],[1]]}")
-        print(f"return 2 columns starting with row 2:\n {df.loc[2:, ['obj_col','int_col']]}")
+        print(f"iloc [2],[1] cell value:\n {df.iloc[[2], [1]]}")
+        print(f"return 2 columns starting with row 2:\n {df.loc[2:, ['obj_col', 'int_col']]}")
         print(f"return last columns from row 2:\n {df.iloc[2:, 1:]}")
         print(f"cell in 2nd row and 'obj_col':\n {df.loc[1, 'obj_col']}")
-        print(f"first 2 rows and repeat first column:\n {df.iloc[[0,1], [0,0]]}")
+        print(f"first 2 rows and repeat first column:\n {df.iloc[[0, 1], [0, 0]]}")
 
         # equivalent of where clause
         print(f"where clause:\n {df[df['int_col'] >= 30]}")
+
+    def test_column_manipulation(self):
+        df = self.df.copy()
+        df["new_str_col"] = "hi mom"
+        df["new_int_col"] = 22
+        print(df)
+        del df["new_int_col"]
+        # same as above, but more flexible.  For example can do it in place or not and it can take more
+        # than 1 column and it is documented.  Though more cryptic
+        # With inplace the original df is unchanged, so to capture change we must assign it.
+        df_changed = df.drop('new_str_col', axis=1, inplace=False)
+        print(df)
+        print(df_changed)
+        # remove column in place i.e. change the df
+        df.drop('new_str_col', axis=1, inplace=True)
+        print(df)
 
     def test_stats(self):
         df = self.df
@@ -66,14 +83,15 @@ class PandasUnitTests(TestCase):
         print(f"\ndataframe['int_col'].mean():\n {df['int_col'].mean()}")
 
         # multiple series/column stats functions
-        print(f"\ndataframe[['int_col','float_col']].describe():\n {df[['int_col','float_col']].describe()}")
-        print(f"\ndataframe[['int_col','float_col']].sum():\n {df[['int_col','float_col']].sum()}")
-        print(f"\ndataframe[['int_col','float_col']].median():\n {df[['int_col','float_col']].median()}")
-        print(f"\ndataframe[['int_col','float_col']].mean():\n {df[['int_col','float_col']].mean()}")
+        print(f"\ndataframe[['int_col','float_col']].describe():\n {df[['int_col', 'float_col']].describe()}")
+        print(f"\ndataframe[['int_col','float_col']].sum():\n {df[['int_col', 'float_col']].sum()}")
+        print(f"\ndataframe[['int_col','float_col']].median():\n {df[['int_col', 'float_col']].median()}")
+        print(f"\ndataframe[['int_col','float_col']].mean():\n {df[['int_col', 'float_col']].mean()}")
 
         # groupby
         print(f"\ndataframe[['int_col','float_col']].describe():\n {df.groupby('obj_col').describe()}")
-        print(f"\ndataframe[['int_col','float_col']].describe():\n {df.groupby(['obj_col','int_col'])['float_col'].describe()}")
+        print(
+            f"\ndataframe[['int_col','float_col']].describe():\n {df.groupby(['obj_col', 'int_col'])['float_col'].describe()}")
 
     def test_plot(self):
         # fig, ax = plt.subplots()
@@ -101,11 +119,3 @@ class PandasUnitTests(TestCase):
         #     ‘pie’ : pie plot
         #     ‘scatter’ : scatter plot
         #     ‘hexbin’ : hexbin plot.
-
-
-
-
-
-
-
-
