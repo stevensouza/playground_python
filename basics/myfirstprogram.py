@@ -201,7 +201,7 @@ class BasicsTests(TestCase):
         template = Template('''
         My template will substitute OS variables in the following: USER=${USER}_HI, HOME=$HOME
         '''
-        )
+                            )
         mystr = template.substitute(os.environ)
         print(mystr)
 
