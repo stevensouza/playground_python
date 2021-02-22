@@ -197,8 +197,11 @@ class BasicsTests(TestCase):
         print(os.environ.get('PATH'))
         print(sys.path, sys.version_info)
         print(sys.version_info)
-        #  replace OS variable references with their values
-        template = Template('my template will substitute OS variables in the following: user=$USER, home=$HOME')
+        #  replace OS variable references with their values.  Can use ${xxx} if no whitespace follows
+        template = Template('''
+        My template will substitute OS variables in the following: USER=${USER}_HI, HOME=$HOME
+        '''
+        )
         mystr = template.substitute(os.environ)
         print(mystr)
 
