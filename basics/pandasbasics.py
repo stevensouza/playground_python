@@ -67,6 +67,10 @@ class PandasUnitTests(TestCase):
         # remove column in place i.e. change the df
         df.drop('new_str_col', axis=1, inplace=True)
         print(df)
+        # take all rows of the first 2 columns
+        print(df.iloc[:, :2])
+        # take all rows of the first 1rst and 4th columns (0 indexed)
+        print(df.iloc[:, [0, 3]])
 
     def test_stats(self):
         df = self.df
@@ -91,7 +95,7 @@ class PandasUnitTests(TestCase):
         # groupby
         print(f"\ndataframe[['int_col','float_col']].describe():\n {df.groupby('obj_col').describe()}")
         print(
-            f"\ndataframe[['int_col','float_col']].describe():\n {df.groupby(['obj_col', 'int_col'])['float_col'].describe()}")
+            f"\ndf.groupby(['obj_col', 'int_col'])['float_col'].describe():\n {df.groupby(['obj_col', 'int_col'])['float_col'].describe()}")
 
     def test_plot(self):
         # fig, ax = plt.subplots()

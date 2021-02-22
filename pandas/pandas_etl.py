@@ -131,8 +131,8 @@ class PandasEtl:
             dataframe = dataframe.applymap(lambda value: _clean_for_googlesheets(value))
             # Change pandas data into a format that google spreadsheets api supports (header, and data in a list)
             #  Note might also be good for doing the following conversion: dataframe.to_dict("split"))
-            data = [dataframe.columns.values.tolist()]
-            data.extend(dataframe.values.tolist())
+            data = [dataframe.columns.values.tolist()]  # header
+            data.extend(dataframe.values.tolist())  # data/rows
             results = spreadsheet.put_data(spreadsheet_id, sheet, data, overwrite_or_append=overwrite_or_append)
             print(results)
         else:
