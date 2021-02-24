@@ -1,5 +1,7 @@
+import os
 import sys
 from datetime import datetime
+from string import Template
 
 import pandas as pd
 from pandas._libs.tslibs.nattype import NaTType
@@ -141,10 +143,10 @@ class PandasEtl:
 
 if __name__ == '__main__':
     # Example: python3 pandas_etl.py resources/memory_to_sqllitedb_config.json
-    # TODO exception could trigger email etc.
     if len(sys.argv) == 2:
         configuration_file = sys.argv[1]
         config = utils.load_json(configuration_file)
+        print(config)
         etl = PandasEtl(config)
         etl.run()
     else:

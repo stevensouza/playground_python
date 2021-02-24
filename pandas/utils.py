@@ -1,4 +1,6 @@
 import json
+import os
+from string import Template
 
 import pandas as pd
 from dateutil.parser import parse as parse_date
@@ -99,12 +101,28 @@ def to_db(dataframe, table_name, schema=None, chunksize=None, engine=None):
     dataframe.to_sql(name=table_name, con=engine, schema=schema, chunksize=chunksize, if_exists='append', index=False)
 
 
-def load_json(filename):
+def load_json(filename, var_subst_func=None):
     """
-        Load a json file into a python dictionary
+        Load a json file into a python dictionary and performs variable substitution on the file
+        contents (i.e ${USER}, ${PASSWORD} could be done in the file or your own approach to variable
+        substitution can be used by passsing in 'var_subst_func' that will accept a version of the
+        json file as a string.
 
         :param filename: json file
+        :param var_subst_func:
         :return: dictionary of json file
     """
     with open(filename) as file:
-        return json.load(file)
+        json_str = file.read()
+
+    if var_subst_func is None:
+        json_str = _substitute_os_vars(json_str)
+
+    return json.loads(json_str)
+
+
+def _substitute_os_vars(json_str):
+    # replace OS variable references with their values.  Can use $xxx or ${xxx} if no whitespace follows
+    # Example { "key": "Hi${USER} Hi $USER, Hi${PASSWORD} or Hi $PASSWORD"}
+    return Template(json_str).substitute(os.environ)
+
