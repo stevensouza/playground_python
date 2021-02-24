@@ -14,8 +14,8 @@ import googlesheets
 
     Assertions - https://www.kite.com/python/docs/unittest.TestCase
 """
-class UnitTests(TestCase):
 
+class UnitTests(TestCase):
     data = [
         ["obj_col", "int_col", "float_col", "date_col"],
         ["joe", 10, 10.5, "12/20/2000"],
@@ -264,8 +264,8 @@ class UnitTests(TestCase):
             df = utils.to_pandas(data, header)
             engine = create_engine('sqlite://', echo=True)
             utils.to_db(engine=engine,
-                    dataframe=df,
-                    table_name=MYTABLE)
+                        dataframe=df,
+                        table_name=MYTABLE)
 
             table_results = engine.execute(f"SELECT * FROM {MYTABLE}").fetchall()
             print(table_results)
@@ -309,8 +309,15 @@ class UnitTests(TestCase):
         self.assertIsNotNone(json.get("source"))
         self.assertEqual("memory", json["source"]["type"])
 
+    def test_load_json_provide_var_subst(self):
+        json = utils.load_json("resources/mysqldb_to_sqllitedb_osvar_subst_config.json",
+                               var_subst_func=self._var_subst)
+        print('after var substitution')
+        print(json)
+        self.assertEqual("jsonfile", json["new"])
 
-
-
-
-
+    # note this method could also be a function and work in the test
+    def _var_subst(self, json_str):
+        print("in _var_subst. original json")
+        print(json_str)
+        return '{"new": "jsonfile"}'

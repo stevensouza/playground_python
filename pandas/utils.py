@@ -116,9 +116,9 @@ def load_json(filename, var_subst_func=None):
         json_str = file.read()
 
     if var_subst_func is None:
-        json_str = _substitute_os_vars(json_str)
+        var_subst_func = _substitute_os_vars
 
-    return json.loads(json_str)
+    return json.loads(var_subst_func(json_str))
 
 
 def _substitute_os_vars(json_str):
