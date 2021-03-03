@@ -1,0 +1,15 @@
+{
+  "source": {
+    "type": "googlesheets",
+    "credentials_file": "/Users/stevesouza/.kettle/client_secret.json",
+    "spreadsheet_id": "1g8ohMGk4KNJSCX2ZMpWRasNwWpV770kDLvuXv2yX0VM",
+    "sheet": "Sheet2!A:A"
+  },
+  "destination": {
+    "type": "googlesheets",
+    "credentials_file": "/Users/stevesouza/.kettle/client_secret.json",
+    "spreadsheet_id": "1g8ohMGk4KNJSCX2ZMpWRasNwWpV770kDLvuXv2yX0VM",
+    "sheet": "Sheet3!B:B",
+    "overwrite_or_append": "OVERWRITE"
+  }
+}
