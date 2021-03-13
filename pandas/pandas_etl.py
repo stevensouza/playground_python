@@ -1,9 +1,8 @@
-import os
 import sys
 from datetime import datetime
-from string import Template
 
 import pandas as pd
+from pandas import DataFrame
 from pandas._libs.tslibs.nattype import NaTType
 from sqlalchemy import create_engine
 
@@ -43,6 +42,15 @@ from exceptions import UnsupportedDataDestination, UnsupportedDataSource
 """
 
 
+def _noop(dataframe: DataFrame) -> DataFrame:
+    """ Default implementation of a function that takes a dataframe as an argument.
+
+     It is automatically called in between getting the source datasource and writing to the destination datasource.  This is
+     a no operation method that doesn't have any effect.
+    """
+    return dataframe
+
+
 def _clean_for_googlesheets(value):
     if isinstance(value, NaTType):
         return None
@@ -63,9 +71,23 @@ class PandasEtl:
     def __init__(self, config_arg):
         self.config = config_arg
 
-    def run(self):
+    def run(self, dataframe_callback=_noop):
+        """
+        Method that performs the ETL (move data from source to destination) defined in the config file.
+
+        This method can be passed a function that allows the caller to manipulate the DataFrame in any
+        way they want before the changed DataFrame is saved to the destination. For example the following
+        function would add a new column to the passed in DataFrame.<br>
+            def add_column(dataframe: DataFrame) -> DataFrame:
+                &nbsp;&nbsp;&nbsp;dataframe['newcol']=22
+                &nbsp;&nbsp;&nbsp;return dataframe
+
+        :param function dataframe_callback: A function that takes a DataFrame as an argument and returns a DataFrame
+            after it has been manipulated. An example call providing the above 'add_column' function:
+                etl.run(dataframe_callback=add_column)
+        """
         dataframe = self.from_source()
-        self.to_destination(dataframe)
+        self.to_destination(dataframe_callback(dataframe))
 
     def from_source(self):
         source_type = self.config['source']['type']
